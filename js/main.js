@@ -1,193 +1,319 @@
+jQuery(document).on('ready', function ($) {
+    "use strict";
 
-$(document).ready(function(){
-	"use strict";
-
-	var window_width 	 = $(window).width(),
-	window_height 		 = window.innerHeight,
-	header_height 		 = $(".default-header").height(),
-	header_height_static = $(".site-header.static").outerHeight(),
-	fitscreen 			 = window_height - header_height;
-
-
-	// $(window).on('load', function() {
- //        // Animate loader off screen
- //        $(".preloader").fadeOut("slow");;
- //    });
-	
-	$(".fullscreen").css("height", window_height)
-	$(".fitscreen").css("height", fitscreen);
-
-    //-------- Active Sticky Js ----------//
-     $(".sticky-header").sticky({topSpacing:0});
-     
-     // -------   Active Mobile Menu-----//
-
-     $(".mobile-btn").on('click', function(e){
-        e.preventDefault();
-        $(".main-menu").slideToggle();
-        $("span", this).toggleClass("lnr-menu lnr-cross");
-        $(".main-menu").addClass('mobile-menu');
+    /*--------------------------
+        STICKY MAINMENU
+    ---------------------------*/
+    $("#mainmenu-area").sticky({
+        topSpacing: 0
     });
-     $(".main-menu li a").on('click', function(e){
-        e.preventDefault();
-        $(".mobile-menu").slideUp();
-        $(".mobile-btn span").toggleClass("lnr-menu lnr-cross");
-    });
-     
 
-    // $(function(){
-    //     $('#Container').mixItUp();
-    // });
-    var mixer = mixitup('#filter-content');
-    $(".controls .filter").on('click', function(event){
-        $(".controls .filter").removeClass('active');
-        $(this).addClass('active');
-    });
-    // Add smooth scrolling to Menu links
-         $(".main-menu li a, .smooth").on('click', function(event) {
-                if (this.hash !== "") {
-                  event.preventDefault();
-                  var hash = this.hash;
-                  $('html, body').animate({
-                    scrollTop: $(hash).offset().top - (-10)
-                }, 600, function(){
-                 
-                    window.location.hash = hash;
-                });
-            } 
-        });
 
-    $('.active-testimonial-carousel').owlCarousel({
-        loop:true,
-        dot: true,
-        items: 3,
-        margin: 30,
-        autoplay:true,
-        autoplayTimeout:3000,
-        autoplayHoverPause:true,
-        animateOut: 'fadeOutLeft',
-        animateIn: 'fadeInRight',
-        responsive:{
-            0:{
-                items:1,
+    /*---------------------------
+        SMOOTH SCROLL
+    -----------------------------*/
+    $('ul#nav li a[href^="#"], a.navbar-brand, a.scrolltotop').on('click', function (event) {
+        var id = $(this).attr("href");
+        var offset = 60;
+        var target = $(id).offset().top - offset;
+        $('html, body').animate({
+            scrollTop: target
+        }, 1500, "easeInOutExpo");
+        event.preventDefault();
+    });
+
+
+    /*----------------------------
+        MOBILE & DROPDOWN MENU
+    ------------------------------*/
+    jQuery('.stellarnav').stellarNav({
+        theme: 'dark'
+    });
+
+
+    /*----------------------------
+        SCROLL TO TOP
+    ------------------------------*/
+    $(window).scroll(function () {
+        var $totalHeight = $(window).scrollTop();
+        var $scrollToTop = $(".scrolltotop");
+        if ($totalHeight > 300) {
+            $(".scrolltotop").fadeIn();
+        } else {
+            $(".scrolltotop").fadeOut();
+        }
+
+        if ($totalHeight + $(window).height() === $(document).height()) {
+            $scrollToTop.css("bottom", "90px");
+        } else {
+            $scrollToTop.css("bottom", "20px");
+        }
+    });
+
+
+    /*--------------------------
+       PARALLAX BACKGROUND
+    ----------------------------*/
+    $(window).stellar({
+        responsive: true,
+        positionProperty: 'position',
+        horizontalScrolling: false
+    });
+
+
+    /*------------------------------
+        VIDEO POPUP
+    --------------------------------*/
+    var $videoModal = $(".video-area-popup");
+    $videoModal.modalVideo({
+        channel: 'youtube'
+    });
+
+
+    /*---------------------------
+        MICHIMP INTEGRATION
+    -----------------------------*/
+    $('#mc-form').ajaxChimp({
+        url: 'http://intimissibd.us14.list-manage.com/subscribe/post?u=a77a312486b6e42518623c58a&amp;id=4af1f9af4c', //Set Your Mailchamp URL
+        callback: function (resp) {
+            if (resp.result === 'success') {
+                $('.subscriber-form input, .subscriber-form button').hide();
+            }
+        }
+    });
+
+
+    /*---------------------------
+        TESTMONIAL SLIDER
+    -----------------------------*/
+    var $testmonialCarousel = $('.testmonial-member-list');
+    $testmonialCarousel.owlCarousel({
+        merge: true,
+        smartSpeed: 1000,
+        loop: true,
+        nav: false,
+        center: true,
+        dots: true,
+        navText: ['<i class="fa fa-long-arrow-left"></i> Prev', 'Next <i class="fa fa-long-arrow-right"></i>'],
+        autoplay: true,
+        autoplayTimeout: 3000,
+        margin: 20,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1
             },
-            600:{
-                items:3,
-             }
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            },
+            1200: {
+                items: 1
+            }
         }
-    })
-     // -------   Mail Send ajax
+    });
 
-     $(document).ready(function() {
-        var form = $('#myForm'); // contact form
-        var submit = $('.submit-btn'); // submit button
-        var alert = $('.alert'); // alert div for show alert message
 
-        // form submit event
-        form.on('submit', function(e) {
-            e.preventDefault(); // prevent default form submit
+    /*---------------------------
+        HOME THREE TESTMONIAL SLIDER
+    -----------------------------*/
+    var $testmonialCarousel = $('.testmonial-slider-two');
+    $testmonialCarousel.owlCarousel({
+        merge: true,
+        smartSpeed: 1000,
+        loop: true,
+        nav: false,
+        dots: false,
+        rtl: false,
+        center: false,
+        navText: ['<i class="fa fa-long-arrow-left"></i> Prev', 'Next <i class="fa fa-long-arrow-right"></i>'],
+        autoplay: true,
+        autoplayTimeout: 3000,
+        margin: 30,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 2
+            },
+            1000: {
+                items: 3
+            },
+            1200: {
+                items: 3
+            },
+            1900: {
+                items: 3
+            }
+        }
+    });
 
-            $.ajax({
-                url: 'mail.php', // form action url
-                type: 'POST', // form submit method get/post
-                dataType: 'html', // request type html/json/xml
-                data: form.serialize(), // serialize form data
-                beforeSend: function() {
-                    alert.fadeOut();
-                    submit.html('Sending....'); // change submit button text
-                },
-                success: function(data) {
-                    alert.html(data).fadeIn(); // fade in response data
-                    form.trigger('reset'); // reset form
-                    submit.html(''); // reset submit button text
-                },
-                error: function(e) {
-                    console.log(e)
+
+    /*---------------------------
+        VIDEO PROMO SLIDER
+    -----------------------------*/
+    var $promoCarousel = $('.video-promo-slider');
+    $promoCarousel.owlCarousel({
+        merge: true,
+        smartSpeed: 1000,
+        loop: true,
+        nav: false,
+        dots: true,
+        center: true,
+        navText: ['<i class="fa fa-long-arrow-left"></i> Prev', 'Next <i class="fa fa-long-arrow-right"></i>'],
+        autoplay: true,
+        autoplayTimeout: 3000,
+        margin: 20,
+        animateIn: 'fadeIn',
+        animateOut: 'fadeOut',
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 1
+            },
+            1000: {
+                items: 1
+            },
+            1200: {
+                items: 1
+            }
+        }
+    });
+
+
+    /*---------------------------
+        SCREENSHOT SLIDER
+    -----------------------------*/
+    var $screenshotCarousel = $('.screenshot-slider');
+    $screenshotCarousel.owlCarousel({
+        merge: true,
+        smartSpeed: 1000,
+        loop: true,
+        nav: false,
+        center: true,
+        navText: ['<i class="fa fa-long-arrow-left"></i> Prev', 'Next <i class="fa fa-long-arrow-right"></i>'],
+        autoplay: true,
+        autoplayTimeout: 3000,
+        margin: 30,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 5
+            },
+            1200: {
+                items: 5
+            },
+            1900: {
+                items: 6
+            }
+        }
+    });
+
+
+    /*---------------------------
+        HOME TWO SCREENSHOT SLIDER
+    -----------------------------*/
+    var $screenshotCarousel = $('.screenshot-slider-2');
+    $screenshotCarousel.owlCarousel({
+        merge: true,
+        smartSpeed: 1000,
+        loop: true,
+        nav: false,
+        rtl: false,
+        center: false,
+        navText: ['<i class="fa fa-long-arrow-left"></i> Prev', 'Next <i class="fa fa-long-arrow-right"></i>'],
+        autoplay: true,
+        autoplayTimeout: 3000,
+        margin: 30,
+        responsiveClass: true,
+        responsive: {
+            0: {
+                items: 1
+            },
+            600: {
+                items: 3
+            },
+            1000: {
+                items: 3
+            },
+            1200: {
+                items: 3
+            },
+            1900: {
+                items: 4
+            }
+        }
+    });
+
+
+    /*---------------------------
+        TEAM SLIDER ACTIVE
+    ---------------------------*/
+    $('.team-slider').slick({
+        dots: true,
+        arrows: false,
+        autoplay: true,
+        speed: 1000,
+        nav: false,
+        vertical: true,
+        slidesToShow: 2,
+        responsive: [
+            {
+                breakpoint: 1280,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
                 }
-            });
-        });
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+        ]
     });
 
-     $(document).ready(function() {
-        $('#mc_embed_signup').find('form').ajaxChimp();
-    });
- });
-(function ($){
 
-    $.fn.bekeyProgressbar = function(options){
+    /*--------------------------
+        ACTIVE WOW JS
+    ----------------------------*/
+    new WOW().init();
 
-        options = $.extend({
-            animate     : true,
-          animateText : true
-        }, options);
 
-        var $this = $(this);
-      
-        var $progressBar = $this;
-        var $progressCount = $progressBar.find('.progressBar-percentage-count');
-        var $circle = $progressBar.find('.progressBar-circle');
-        var percentageProgress = $progressBar.attr('data-progress');
-        var percentageRemaining = (100 - percentageProgress);
-        var percentageText = $progressCount.parent().attr('data-progress');
-      
-        //Calcule la circonférence du cercle
-        var radius = $circle.attr('r');
-        var diameter = radius * 2;
-        var circumference = Math.round(Math.PI * diameter);
+}(jQuery));
 
-        //Calcule le pourcentage d'avancement
-        var percentage =  circumference * percentageRemaining / 100;
 
-        $circle.css({
-          'stroke-dasharray' : circumference,
-          'stroke-dashoffset' : percentage
-        })
-        
-        //Animation de la barre de progression
-        if(options.animate === true){
-          $circle.css({
-            'stroke-dashoffset' : circumference
-          }).animate({
-            'stroke-dashoffset' : percentage
-          }, 3000 )
-        }
-        
-        //Animation du texte (pourcentage)
-        if(options.animateText == true){
- 
-          $({ Counter: 0 }).animate(
-            { Counter: percentageText },
-            { duration: 3000,
-             step: function () {
-               $progressCount.text( Math.ceil(this.Counter) + '%');
-             }
-            });
 
-        }else{
-          $progressCount.text( percentageText + '%');
-        }
-      
-    };
+jQuery(window).on('load', function () {
+    "use strict";
+    /*--------------------------
+        PRE LOADER
+    ----------------------------*/
+    $(".preeloader").fadeOut(1000);
 
-})(jQuery);
-
-$(document).ready(function(){
-  
-  $('.progressBar--animateNone').bekeyProgressbar({
-    animate : false,
-    animateText : false
-  });
-  
-  $('.progressBar--animateCircle').bekeyProgressbar({
-    animate : true,
-    animateText : false
-  });
-  
-  $('.progressBar--animateText').bekeyProgressbar({
-    animate : false,
-    animateText : true
-  });
-  
-  $('.progressBar--animateAll').bekeyProgressbar();
-  
-})
+});
