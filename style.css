@@ -116,6 +116,25 @@ body {
     color: #6f6f6f;
 }
 
+/* Text between <hr> tag */
+
+hr.style-four {
+padding: 0;
+border: none;
+border-top: medium double #333;
+color: #333;
+text-align: center;
+}
+hr.style-four:after {
+content: "www.gronenergy.com";
+display: inline-block;
+position: relative;
+top: -0.7em;
+font-size: 1.5em;
+padding: 0 0.25em;
+background: white;
+}
+
 a:hover,
 a:focus {
     text-decoration: none;
@@ -1068,7 +1087,7 @@ input:-webkit-autofill:focus {
 }
 
 .is-sticky .search-and-signup-button a {
- 
+
     color: #7bc143;
 }
 
@@ -1201,7 +1220,7 @@ ul#nav li ul a,
 
 .home-three .is-sticky .search-and-signup-button {
     padding: 20px 0 16px 34px;
-    
+
 }
 
 /*-----------------------------------
@@ -2911,7 +2930,7 @@ label.mt10.valid {
 }
 
 .top-area.single-page.is-sticky .search-and-signup-button a {
- 
+
     color: #7bc143;
 }
 
@@ -3034,7 +3053,7 @@ label.mt10.valid {
 
 .top-area.single-page .home-three .is-sticky .search-and-signup-button {
     padding: 20px 0 16px 34px;
-    
+
 }
 
 
